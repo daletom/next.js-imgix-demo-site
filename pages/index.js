@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { renderMetaTags, useQuerySubscription } from "react-datocms";
 import Container from "@/components/container";
-import HeroPost from "@/components/hero-post";
-import Intro from "@/components/intro";
+//import HeroPost from "@/components/hero-post";
+//import Intro from "@/components/intro";
 import TheHeader from "@/components/theHeader"
 import Layout from "@/components/layout";
 import MoreStories from "@/components/more-stories";
@@ -72,8 +72,8 @@ export default function Index({ subscription }) {
     data: { allPosts, site, blog },
   } = useQuerySubscription(subscription);
 
-  const heroPost = allPosts[0];
-  const morePosts = allPosts.slice(1);
+  //const heroPost = allPosts[0];
+  const morePosts = allPosts;
   const metaTags = blog.seo.concat(site.favicon);
 
   return (
@@ -82,7 +82,7 @@ export default function Index({ subscription }) {
         <Head>{renderMetaTags(metaTags)}</Head>
         <Container>
           <TheHeader />
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+          <MoreStories posts={morePosts} />
         </Container>
       </Layout>
     </>

@@ -6,6 +6,7 @@ import Layout from "@/components/layout";
 import MoreStories from "@/components/more-stories";
 import PostBody from "@/components/post-body";
 import PostHeader from "@/components/post-header";
+import TheHeader2 from "@/components/theHeader2"
 import SectionSeparator from "@/components/section-separator";
 import { request } from "@/lib/datocms";
 import { metaTagsFragment, responsiveImageFragment } from "@/lib/fragments";
@@ -33,6 +34,8 @@ export async function getStaticProps({ params, preview = false }) {
             ...metaTagsFragment
           }
           title
+          iframe
+          excerpt
           slug
           content {
             value
@@ -120,20 +123,34 @@ export default function Post({ subscription, preview }) {
   } = useQuerySubscription(subscription);
 
   const metaTags = post.seo.concat(site.favicon);
+  const iframeEmbed = post.iframe.slice(1);
 
   return (
     <Layout preview={preview}>
       <Head>{renderMetaTags(metaTags)}</Head>
       <Container>
-        <Header />
+      <TheHeader2 
+        title={post.title}
+        coverImage={post.coverImage}
+        excerpt={post.excerpt}
+      />
         <article>
-          <PostHeader
-            title={post.title}
-            coverImage={post.coverImage}
-            date={post.date}
-            author={post.author}
-          />
+        
           <PostBody content={post.content} />
+          <iframe
+            src={post.iframe}
+            title="imgix Management JS Example"
+            allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+            sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            className="w-full"
+            width={1200}
+            height={800}
+            >
+            </iframe>
+          <div>
+          
+          </div>
+          
         </article>
         <SectionSeparator />
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}
